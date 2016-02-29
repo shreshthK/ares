@@ -1,4 +1,4 @@
-package egen.project.entity;
+package com.movieFlex.Model.Pojos;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -2,6 +2,7 @@ package com.movieFlex.Controllers.MovieCon;
 
 import java.util.List;
 
+import com.movieFlex.Model.Pojos.Comment;
 import com.movieFlex.Model.Pojos.MovieDetails;
 import com.movieFlex.Model.Pojos.StatusObj;
 
@@ -46,7 +47,7 @@ public interface MovieActions {
 	 * It returns the status object after deleting the movie
 	 * url: /delete  
 	 */
-	public StatusObj deleteMovieFlexEntry(String uuid, String securityToken);
+	public StatusObj deleteMovieFlexEntry(String uuid);
 	
 	/**
 	 * Edit a movie 
@@ -55,6 +56,16 @@ public interface MovieActions {
 	 */
 	public MovieDetails editMovieFlexEntry(MovieDetails md);
 	
+	/**
+	 * Add comments to the movie
+	 * It accepts the comment object and returns a list of the newley appended comments 
+	 */
+	public List<Comment> addMovieComemnts(Comment comment);
 	
+	/**
+	 * Get movie comments
+	 * IT returns a list of movie comments. It is paginated by defaule 
+	 */
+	public List<Comment> getMovieCommetns(String uuid);
 
 }

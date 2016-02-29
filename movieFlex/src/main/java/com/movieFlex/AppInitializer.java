@@ -9,6 +9,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import com.movieFlex.HibernateCon.HibernateComfig;
 import com.movieFlex.springConfig.SpringRootConfig;
 import com.movieFlex.springConfig.users.SpringUserConfig;
 
@@ -25,7 +26,8 @@ public class AppInitializer implements WebApplicationInitializer {
 	    // Dispatcher Servlet 1: Users Servlet 
 	    AnnotationConfigWebApplicationContext webContext1 = new AnnotationConfigWebApplicationContext();
 	    webContext1.setParent(rootContext);
-	    webContext1.register(SpringUserConfig.class);
+	    webContext1.register(SpringUserConfig.class);//Register the spring configuration class
+	    webContext1.register(HibernateComfig.class);//Register Hibernate configuration class
 	    ServletRegistration.Dynamic dispatcher1 = servletContext.addServlet("dispatcher1", new DispatcherServlet(webContext1));
 	    dispatcher1.setLoadOnStartup(1);
 	    dispatcher1.addMapping("/api/*");
