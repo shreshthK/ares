@@ -3,8 +3,7 @@ package com.movieFlex.Controllers.MovieCon;
 import java.util.List;
 
 import com.movieFlex.Model.Pojos.Comment;
-import com.movieFlex.Model.Pojos.MovieDetails;
-import com.movieFlex.Model.Pojos.StatusObj;
+import com.movieFlex.Model.Pojos.Movie;
 
 public interface MovieActions {
 	
@@ -18,7 +17,7 @@ public interface MovieActions {
 	 * returns a list of movie snippet Object 
 	 * url: /{filter}/paginate?p=0
 	 */
-	public List<MovieDetails> getList(String filterType,int p);
+	public List<Movie> getList(String filterType,int p);
 	
 	/**
 	 * Rate a movie, accepts movie uuid, rating and the username
@@ -36,10 +35,10 @@ public interface MovieActions {
 	
 	/**
 	 * Create a new move. 
-	 * It accepts all the details of the move and creates a new movie. It returns the status object
+	 * It accepts all the details of the move and creates a new movie. It returns the movie details
 	 * url: /create 
 	 */
-	public StatusObj createMovieFlexEntry(MovieDetails md);
+	public Movie createMovieFlexEntry(Movie m);
 	
 	/**
 	 * Delete a movie
@@ -47,14 +46,14 @@ public interface MovieActions {
 	 * It returns the status object after deleting the movie
 	 * url: /delete  
 	 */
-	public StatusObj deleteMovieFlexEntry(String uuid);
+	public void deleteMovieFlexEntry(String uuid);
 	
 	/**
 	 * Edit a movie 
 	 * It edits the details of a existing movie. It accepts the MovieDetails object and returns the same
 	 * url: /edit 
 	 */
-	public MovieDetails editMovieFlexEntry(MovieDetails md);
+	public Movie editMovieFlexEntry(Movie m);
 	
 	/**
 	 * Add comments to the movie

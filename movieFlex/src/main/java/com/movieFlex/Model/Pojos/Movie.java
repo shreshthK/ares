@@ -1,9 +1,9 @@
 package com.movieFlex.Model.Pojos;
 
 
-
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class Movie {
 	@Id
 	@GeneratedValue(generator="uuid2")
 	 @GenericGenerator(strategy="uuid2", name = "uuid2")
-	@Setter private String movieId;
+	@Getter @Setter private String movieId;
 	
 	@Column(nullable=false, unique=true)
 	@Getter @Setter private String title;
@@ -40,24 +41,24 @@ public class Movie {
 	@Column(nullable=false)
 	@Getter @Setter private String runtime;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	@Column(nullable=false)
-	@Getter @Setter private List<Genre> genres;
+	@Getter @Setter private List<Genre> genre;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	@Column(nullable=false)
 	@Getter @Setter private List<Writers> writer;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	@Column(nullable=false)
 	@Getter @Setter private List<Directors> director;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	@Column(nullable=false)
 	@Getter @Setter private List<Actors> actor;
 	
 	@Column(nullable=false)
-	@Getter @Setter private String Slot;
+	@Getter @Setter private String plot;
 	
 	@Column(nullable=false)
 	@Getter @Setter private String language;
@@ -85,6 +86,5 @@ public class Movie {
 	
 	@Column(nullable=false)
 	@Getter @Setter private String type;
-	
 
 }

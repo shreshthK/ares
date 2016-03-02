@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.movieFlex.Model.Pojos.User;
-import com.movieFlex.Model.Pojos.UserRegistration;
+import com.movieFlex.Model.Pojos.UserLogin;
 import com.movieFlex.util.OrderedPair;
 
 @Controller
@@ -42,7 +42,7 @@ public class UserController implements UserActions {
 	@Override
 	@RequestMapping(value="/find",method= RequestMethod.POST,
 								produces=MediaType.APPLICATION_JSON_VALUE)
-	public User getUser(UserRegistration ur) {
+	public User getUser(UserLogin ur) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -50,7 +50,7 @@ public class UserController implements UserActions {
 	@Override
 	@RequestMapping(value="/create",method= RequestMethod.POST,
 								produces=MediaType.APPLICATION_JSON_VALUE)
-	public User createUser(UserRegistration ur) {
+	public User createUser(UserLogin ur) {
 		// TODO Auto-generated method stub
 		return null;
 	}

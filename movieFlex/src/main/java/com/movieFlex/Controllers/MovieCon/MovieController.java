@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.movieFlex.Dao.MovieDaoActions;
 import com.movieFlex.Model.Pojos.Comment;
-import com.movieFlex.Model.Pojos.MovieDetails;
-import com.movieFlex.Model.Pojos.StatusObj;
+import com.movieFlex.Model.Pojos.Movie;
 
 @Controller
 @ResponseBody
@@ -40,7 +39,7 @@ public class MovieController implements MovieActions{
 	@Override
 	@RequestMapping(value="/{filter}/paginate?p=0",method= RequestMethod.GET,
 								produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<MovieDetails> getList(@PathVariable("filter") String filterType,@RequestParam(value = "p") int p) {
+	public List<Movie> getList(@PathVariable("filter") String filterType,@RequestParam(value = "p") int p) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -63,29 +62,26 @@ public class MovieController implements MovieActions{
 	}
 
 	@Override
-	@RequestMapping(value="/create",method= RequestMethod.GET,
+	@RequestMapping(value="/create",method= RequestMethod.POST,
 								produces=MediaType.APPLICATION_JSON_VALUE,
 								consumes=MediaType.APPLICATION_JSON_VALUE)
-	public StatusObj createMovieFlexEntry(@RequestBody MovieDetails md) {
-		// TODO Auto-generated method stub
-		return null;
+	public Movie createMovieFlexEntry(@RequestBody Movie m) {
+		return mActions.addTitle(m);
 	}
 
 	@Override
 	@RequestMapping(value="/delete/{uuid}",method= RequestMethod.DELETE,
 								produces=MediaType.APPLICATION_JSON_VALUE)
-	public StatusObj deleteMovieFlexEntry(@PathVariable("uuid")String uuid) {
-		// TODO Auto-generated method stub
-		return null;
+	public void deleteMovieFlexEntry(@PathVariable("uuid")String movieId) {
+		mActions.deleteTitle(movieId);
 	}
 
 	@Override
-	@RequestMapping(value="/edit",method= RequestMethod.POST,
+	@RequestMapping(value="/edit",method= RequestMethod.PUT,
 								produces=MediaType.APPLICATION_JSON_VALUE,
 								consumes=MediaType.APPLICATION_JSON_VALUE)
-	public MovieDetails editMovieFlexEntry(@RequestBody MovieDetails md) {
-		// TODO Auto-generated method stub
-		return null;
+	public Movie editMovieFlexEntry(@RequestBody Movie m) {
+		return mActions.editTitle(m);
 	}
 
 	@Override

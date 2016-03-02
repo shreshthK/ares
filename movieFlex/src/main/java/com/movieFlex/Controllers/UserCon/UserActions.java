@@ -3,7 +3,7 @@ package com.movieFlex.Controllers.UserCon;
 import java.util.List;
 
 import com.movieFlex.Model.Pojos.User;
-import com.movieFlex.Model.Pojos.UserRegistration;
+import com.movieFlex.Model.Pojos.UserLogin;
 
 public interface UserActions {
 
@@ -21,14 +21,14 @@ public interface UserActions {
 	 * given the email of the user we must be able to get a user from the database. It is conceptually 
 	 * equal to the Login Function.
 	 */
-	public User getUser(UserRegistration ur);
+	public User getUser(UserLogin ur);
 	
 	/**
 	 * Create a user 
 	 * this accepts a object of type userRegistration, it then creates a user object and a login object.
 	 * It returns the user object if successful  
 	 */
-	public User createUser(UserRegistration ur);
+	public User createUser(UserLogin ur);
 	
 	/**
 	 * Delete a user
