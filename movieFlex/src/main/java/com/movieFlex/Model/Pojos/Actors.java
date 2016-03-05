@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -22,5 +24,14 @@ public class Actors {
 	
 	@Column(nullable=false, unique=true)
 	@Getter @Setter private String actorName;
-
+	
+	@Column(nullable=false)
+	@Getter @Setter private boolean  deleted;
+	
+	@PrePersist
+	void preInsert() {
+	   deleted = false;
+	}
+	
+	
 }

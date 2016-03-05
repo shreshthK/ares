@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.movieFlex.Dao.MovieDaoActions;
+import com.movieFlex.Exception.MovieAlreadyExistsException;
+import com.movieFlex.Exception.MovieNotFoundException;
 import com.movieFlex.Model.Pojos.Comment;
 import com.movieFlex.Model.Pojos.Movie;
 
@@ -65,14 +67,14 @@ public class MovieController implements MovieActions{
 	@RequestMapping(value="/create",method= RequestMethod.POST,
 								produces=MediaType.APPLICATION_JSON_VALUE,
 								consumes=MediaType.APPLICATION_JSON_VALUE)
-	public Movie createMovieFlexEntry(@RequestBody Movie m) {
+	public Movie createMovieFlexEntry(@RequestBody Movie m) throws MovieAlreadyExistsException {
 		return mActions.addTitle(m);
 	}
 
 	@Override
 	@RequestMapping(value="/delete/{uuid}",method= RequestMethod.DELETE,
 								produces=MediaType.APPLICATION_JSON_VALUE)
-	public void deleteMovieFlexEntry(@PathVariable("uuid")String movieId) {
+	public void deleteMovieFlexEntry(@PathVariable("uuid")String movieId) throws MovieNotFoundException {
 		mActions.deleteTitle(movieId);
 	}
 
@@ -80,7 +82,7 @@ public class MovieController implements MovieActions{
 	@RequestMapping(value="/edit",method= RequestMethod.PUT,
 								produces=MediaType.APPLICATION_JSON_VALUE,
 								consumes=MediaType.APPLICATION_JSON_VALUE)
-	public Movie editMovieFlexEntry(@RequestBody Movie m) {
+	public Movie editMovieFlexEntry(@RequestBody Movie m) throws MovieNotFoundException {
 		return mActions.editTitle(m);
 	}
 

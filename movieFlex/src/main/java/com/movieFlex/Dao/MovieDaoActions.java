@@ -2,6 +2,8 @@ package com.movieFlex.Dao;
 
 import java.util.List;
 
+import com.movieFlex.Exception.MovieAlreadyExistsException;
+import com.movieFlex.Exception.MovieNotFoundException;
 import com.movieFlex.Model.Pojos.Comment;
 import com.movieFlex.Model.Pojos.Movie;
 
@@ -19,10 +21,11 @@ public interface MovieDaoActions {
 	
 	/**
 	 * Persists a movie title and returns the persisted movie 
+	 * @throws MovieAlreadyExistsException 
 	 **/
-	public Movie addTitle(Movie m);
+	public Movie addTitle(Movie m) throws MovieAlreadyExistsException;
 	
-	public Movie editTitle(Movie m);
+	public Movie editTitle(Movie m) throws MovieNotFoundException;
 
-	public void deleteTitle(String movieId);
+	public void deleteTitle(String movieId) throws MovieNotFoundException;
 }

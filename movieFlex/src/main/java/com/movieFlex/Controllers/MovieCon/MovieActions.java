@@ -2,6 +2,8 @@ package com.movieFlex.Controllers.MovieCon;
 
 import java.util.List;
 
+import com.movieFlex.Exception.MovieAlreadyExistsException;
+import com.movieFlex.Exception.MovieNotFoundException;
 import com.movieFlex.Model.Pojos.Comment;
 import com.movieFlex.Model.Pojos.Movie;
 
@@ -37,23 +39,26 @@ public interface MovieActions {
 	 * Create a new move. 
 	 * It accepts all the details of the move and creates a new movie. It returns the movie details
 	 * url: /create 
+	 * @throws MovieAlreadyExistsException 
 	 */
-	public Movie createMovieFlexEntry(Movie m);
+	public Movie createMovieFlexEntry(Movie m) throws MovieAlreadyExistsException;
 	
 	/**
 	 * Delete a movie
 	 * It deletes a movie. Accepts the uuid of the movie and the security token 
 	 * It returns the status object after deleting the movie
 	 * url: /delete  
+	 * @throws MovieNotFoundException 
 	 */
-	public void deleteMovieFlexEntry(String uuid);
+	public void deleteMovieFlexEntry(String uuid) throws MovieNotFoundException;
 	
 	/**
 	 * Edit a movie 
 	 * It edits the details of a existing movie. It accepts the MovieDetails object and returns the same
 	 * url: /edit 
+	 * @throws MovieNotFoundException 
 	 */
-	public Movie editMovieFlexEntry(Movie m);
+	public Movie editMovieFlexEntry(Movie m) throws MovieNotFoundException;
 	
 	/**
 	 * Add comments to the movie

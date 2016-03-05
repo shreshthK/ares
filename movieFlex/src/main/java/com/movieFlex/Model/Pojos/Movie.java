@@ -8,7 +8,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -19,6 +23,9 @@ import lombok.Setter;
 
 @Entity
 @Table
+@NamedQueries(
+		@NamedQuery(name="Movie.findByMovieTitle",query="SELECT m FROM Movie m WHERE m.title = :mTitle")
+		)
 public class Movie {
 	
 	@Id
@@ -86,5 +93,13 @@ public class Movie {
 	
 	@Column(nullable=false)
 	@Getter @Setter private String type;
-
+	
+	@Column(nullable=false)
+	@Getter @Setter private boolean  deleted;
+	
+	@PrePersist
+	void preInsert() {
+	   deleted = false;
+	}
+	
 }

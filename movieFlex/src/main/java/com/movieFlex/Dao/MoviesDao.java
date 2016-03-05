@@ -2,6 +2,7 @@ package com.movieFlex.Dao;
 
 import java.util.List;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -9,6 +10,8 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.movieFlex.Exception.MovieAlreadyExistsException;
+import com.movieFlex.Exception.MovieNotFoundException;
 import com.movieFlex.Model.Pojos.Actors;
 import com.movieFlex.Model.Pojos.Comment;
 import com.movieFlex.Model.Pojos.Directors;
@@ -41,94 +44,110 @@ public class MoviesDao implements MovieDaoActions{
 	}
 
 	@Override
-	public Movie addTitle(Movie m) {
+	public Movie addTitle(Movie m) throws MovieAlreadyExistsException {
 		
-		/* List<Genre> genres = m.getGenre();
-		for (Genre genre : genres) {
-			Genre existing = genre.find(Genre.class, genre.getName());
-			if(existing==null)
-				em.persist(genre);
-		} 
-		
-		List<Writers> writers = m.getWriter();
-		for (Writers writer : writers) {
-			em.persist(writer);
-		}
-		
-		List<Directors> directors = m.getDirector();
-		for(Directors director : directors){	
-			em.persist(director);
-		}
-		
-		List<Actors> actors = m.getActor();
-		for(Actors actor: actors){
-			em.persist(actor);
-		} */
-		
-		em.persist(m);
-		
-		return m;
+		TypedQuery<Movie> query = em.createNamedQuery("Movie.findByMovieTitle", Movie.class);
+    	query.setParameter("mTitle", m.getTitle());
+    	List<Movie> movies =  query.getResultList();
+    	
+    	if(movies.size() >0){
+    		throw new MovieAlreadyExistsException();	
+    		
+    	} else {
+    		em.persist(m);
+    	}
+    				
+    	return m;
 	}
 	
 	@Override
-	public Movie editTitle(Movie m) {
-		
-		Movie movie = m;
+	public Movie editTitle(Movie m) throws MovieNotFoundException {
 		
 		Movie existing = em.find(Movie.class, m.getMovieId());
 		
 	    if(existing != null){
+	    	
+	    	existing.setTitle(m.getTitle());
+	    	existing.setYear(m.getYear());
+	    	existing.setRated(m.getRated());
+	    	existing.setReleased(m.getReleased());
+	    	existing.setRuntime(m.getRuntime());
+	    	existing.setPlot(m.getPlot()); 
+	    	existing.setLanguage(m.getLanguage());
+	    	existing.setCountry(m.getCountry());
+	    	existing.setAwards(m.getAwards());
+	    	existing.setPoster(m.getPoster());
+	    	existing.setMetascore(m.getMetascore());
+	    	existing.setImdbRating(m.getImdbRating());
+	    	existing.setImdbVotes(m.getImdbVotes());
+	    	existing.setImdbID(m.getImdbID());
+	    	existing.setType(m.getType());
+	    	existing.setDeleted(false);
 			
-	    	//Following code can be used when soft delete is implemented
-			/*
-			List<Genre> genres = movie.getGenre();
-			for(Genre genre : genres )
+	    	List<Genre> genres = existing.getGenre();
+			for(Genre genre : genres ){
+				genre.setDeleted(false);
 				em.merge(genre);
-			
-			List<Writers> writers = movie.getWriter();
+			}
+			List<Writers> writers = existing.getWriter();
 			for (Writers writer : writers) {
+				writer.setDeleted(false);
 				em.merge(writer);
 			}
 			
-			List<Directors> directors = movie.getDirector();
+			List<Directors> directors = existing.getDirector();
 			for(Directors director : directors){	
+				director.setDeleted(false);
 				em.merge(director);
 			}
 			
-			List<Actors> actors = movie.getActor();
-			for(Actors actor: actors)
-				em.merge(actor);*/
-	 		
-	    	em.merge(m);
+			List<Actors> actors = existing.getActor();
+			for(Actors actor: actors){
+				actor.setDeleted(false);
+				em.merge(actor);
+			}
+			
+	    	em.merge(existing);
+	    }else{
+	    	throw new MovieNotFoundException();
 	    }
 	    
 		return m;
 	}
 
 	@Override
-	public void deleteTitle(String movieId) {
+	public void deleteTitle(String movieId) throws MovieNotFoundException {
 		Movie existing = em.find(Movie.class, movieId);
 		
-		//Following code can be used when soft delete is implemented
-		/*List<Genre> genres = existing.getGenre();
-		for(Genre genre : genres )
-			em.remove(genre);
-		
-		List<Writers> writers = existing.getWriter();
-		for (Writers writer : writers) {
-			em.remove(writer);
-		}
-		
-		List<Directors> directors = existing.getDirector();
-		for(Directors director : directors){	
-			em.remove(director);
-		}
-		
-		List<Actors> actors = existing.getActor();
-		for(Actors actor: actors)
-			em.remove(actor);*/
+		if(existing!=null){
+			List<Genre> genres = existing.getGenre();
+			for(Genre genre : genres ){
+				genre.setDeleted(true);
+				em.merge(genre);
+			}
+			List<Writers> writers = existing.getWriter();
+			for (Writers writer : writers) {
+				writer.setDeleted(true);
+				em.merge(writer);
+			}
 			
-		em.remove(existing);
+			List<Directors> directors = existing.getDirector();
+			for(Directors director : directors){	
+				director.setDeleted(true);
+				em.merge(director);
+			}
+			
+			List<Actors> actors = existing.getActor();
+			for(Actors actor: actors){
+				actor.setDeleted(true);
+				em.merge(actor);
+			}
+			
+			existing.setDeleted(true);
+			
+			em.merge(existing);
+		}else{
+			throw new MovieNotFoundException();
+		}
 	}
-
 }

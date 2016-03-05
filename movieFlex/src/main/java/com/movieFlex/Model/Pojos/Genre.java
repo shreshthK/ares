@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -25,5 +27,11 @@ public class Genre {
 	@Column(nullable=false, unique=true)
 	@Getter @Setter private String genreName;
 	
+	@Column(nullable=false)
+	@Getter @Setter private boolean  deleted;
 	
+	@PrePersist
+	void preInsert() {
+	   deleted = false;
+	}
 }
