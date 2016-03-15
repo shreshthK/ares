@@ -1,38 +1,22 @@
 package com.movieFlex;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import com.movieFlex.HibernateCon.HibernateComfig;
-import com.movieFlex.springConfig.SpringRootConfig;
-import com.movieFlex.springConfig.users.SpringUserConfig;
-
-public class AppInitializer implements WebApplicationInitializer {
+public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		
-		// root context
-	    AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-	    rootContext.register(SpringRootConfig.class);
-	    servletContext.addListener(new ContextLoaderListener(rootContext));
-	    
-	    // Dispatcher Servlet 1: Users Servlet 
-	    AnnotationConfigWebApplicationContext webContext1 = new AnnotationConfigWebApplicationContext();
-	    webContext1.setParent(rootContext);
-	    webContext1.register(SpringUserConfig.class);//Register the spring configuration class
-	    webContext1.register(HibernateComfig.class);//Register Hibernate configuration class
-	    ServletRegistration.Dynamic dispatcher1 = servletContext.addServlet("dispatcher1", new DispatcherServlet(webContext1));
-	    dispatcher1.setLoadOnStartup(1);
-	    dispatcher1.addMapping("/api/*");
-	    
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class[] {AppConfig.class, JPAConfig.class};
 	}
 
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+		return null;
+	}
 
+	@Override
+	protected String[] getServletMappings() {
+		return new String[] {"/api/*"};
+	}
 }

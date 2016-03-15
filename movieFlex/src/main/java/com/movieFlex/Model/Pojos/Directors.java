@@ -5,13 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table
@@ -19,14 +17,39 @@ public class Directors {
 	@Id
 	@GeneratedValue(generator="uuid2")
 	@GenericGenerator(name="uuid2", strategy="uuid2")
-	@Getter @Setter private String directorId;
+	@JsonIgnore
+	 private String directorId;
 	
 	@Column(nullable=false, unique=true)
-	@Getter @Setter private String directorName;
+	 private String directorName;
 	
 	@Column(nullable=false)
-	@Getter @Setter private boolean  deleted;
+	 private boolean  deleted;
 	
+	public String getDirectorId() {
+		return directorId;
+	}
+
+	public void setDirectorId(String directorId) {
+		this.directorId = directorId;
+	}
+
+	public String getDirectorName() {
+		return directorName;
+	}
+
+	public void setDirectorName(String directorName) {
+		this.directorName = directorName;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	@PrePersist
 	void preInsert() {
 	   deleted = false;

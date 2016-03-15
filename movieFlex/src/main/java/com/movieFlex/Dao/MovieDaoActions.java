@@ -28,4 +28,10 @@ public interface MovieDaoActions {
 	public Movie editTitle(Movie m) throws MovieNotFoundException;
 
 	public void deleteTitle(String movieId) throws MovieNotFoundException;
+
+	public List<Movie> findTopRatedMovies();
+
+	public List<Movie> findTopRatedSeries();
+
+	public List<Movie> findAllMovies();
 }

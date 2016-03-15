@@ -19,6 +19,7 @@ import com.movieFlex.Exception.MovieAlreadyExistsException;
 import com.movieFlex.Exception.MovieNotFoundException;
 import com.movieFlex.Model.Pojos.Comment;
 import com.movieFlex.Model.Pojos.Movie;
+import com.movieFlex.Service.MovieCon.IMovieService;
 
 @Controller
 @ResponseBody
@@ -27,6 +28,9 @@ public class MovieController implements MovieActions{
 
 	@Autowired
 	MovieDaoActions mActions;
+	
+	@Autowired
+	IMovieService service;
 	@RequestMapping(value="/hello-eng",method= RequestMethod.GET,
 						produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<String> sayHello(ModelMap map)
@@ -99,5 +103,30 @@ public class MovieController implements MovieActions{
 	public List<Comment> getMovieCommetns(@PathVariable("movieId") String movieId) {
 		return mActions.getComments(movieId);
 	}
-
+	
+	@RequestMapping(value="/sort/ratings", method= RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Movie> sortMoviesByRating(){
+		return service.findAllMoviesByRatings();
+		
+	}
+	
+	@RequestMapping(value="/sort/year", method= RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Movie> sortMoviesByYear(){
+		return service.findAllMoviesByYear();
+	}
+	
+	@RequestMapping(value="/sort/votes", method= RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Movie> sortMoviesByVotes(){
+		return service.findAllMoviesByVotes();
+	}
+	@RequestMapping(value="/toprated/movies", method= RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Movie> topRatedMovies(){
+		return service.topRatedMovies();
+		
+	}
+	@RequestMapping(value="/toprated/series", method= RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Movie> topRatedSeries(){
+		return service.topRatedSeries();
+		
+	}
 }

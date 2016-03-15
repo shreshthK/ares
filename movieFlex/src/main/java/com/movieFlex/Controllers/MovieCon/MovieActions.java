@@ -71,5 +71,15 @@ public interface MovieActions {
 	 * IT returns a list of movie comments. It is paginated by defaule 
 	 */
 	public List<Comment> getMovieCommetns(String uuid);
+	
+	public List<Movie> sortMoviesByRating();
+	
+	public List<Movie> sortMoviesByYear();
+	
+	public List<Movie> sortMoviesByVotes();
+	
+	public List<Movie> topRatedMovies();
+	
+	public List<Movie> topRatedSeries();
 
 }

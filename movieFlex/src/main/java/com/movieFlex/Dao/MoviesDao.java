@@ -1,8 +1,8 @@
 package com.movieFlex.Dao;
 
+import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -149,5 +149,27 @@ public class MoviesDao implements MovieDaoActions{
 		}else{
 			throw new MovieNotFoundException();
 		}
+	}
+
+	@Override
+	public List<Movie> findAllMovies() {
+		TypedQuery<Movie> query = em.createQuery("Movie.findAll", Movie.class);
+		List<Movie>mv=query.getResultList();
+		return mv;
+	}
+
+
+	@Override
+	public List<Movie> findTopRatedMovies() {
+		TypedQuery<Movie> query = em.createQuery("Movie.topRatedMovies", Movie.class);
+		List<Movie>mv=query.getResultList();
+		return mv;
+	}
+
+	@Override
+	public List<Movie> findTopRatedSeries() {
+		TypedQuery<Movie> query = em.createQuery("Movie.topRatedSeries", Movie.class);
+		List<Movie>mv=query.getResultList();
+		return mv;
 	}
 }

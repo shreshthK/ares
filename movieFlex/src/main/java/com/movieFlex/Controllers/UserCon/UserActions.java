@@ -2,6 +2,8 @@ package com.movieFlex.Controllers.UserCon;
 
 import java.util.List;
 
+import com.movieFlex.Exception.UserAlreadyExistsException;
+import com.movieFlex.Exception.UserNotFoundException;
 import com.movieFlex.Model.Pojos.User;
 import com.movieFlex.Model.Pojos.UserLogin;
 
@@ -27,13 +29,16 @@ public interface UserActions {
 	 * Create a user 
 	 * this accepts a object of type userRegistration, it then creates a user object and a login object.
 	 * It returns the user object if successful  
+	 * @throws UserAlreadyExistsException 
 	 */
-	public User createUser(UserLogin ur);
+	public User createUser(User ur) throws UserAlreadyExistsException;
 	
 	/**
 	 * Delete a user
 	 * This function needs to delete a user, it accepts the users email
 	 * it return the User object if successful 
 	 */
-	public User deleteUser(String userEmail);
+	public void deleteUser(String email);
+	
+	public User updateUser(String email, User user) throws UserNotFoundException;
 }

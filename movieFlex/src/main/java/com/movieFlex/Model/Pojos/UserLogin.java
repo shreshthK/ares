@@ -1,11 +1,21 @@
 package com.movieFlex.Model.Pojos;
 
-import lombok.Getter;
-import lombok.Setter;
 
 public class UserLogin {
-	@Getter @Setter private String userName;
-	@Getter @Setter private String password;
+	 private String userName;
+	 public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	private String password;
 	public UserLogin(String userName, String password) {
 		super();
 		this.userName = userName;
