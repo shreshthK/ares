@@ -23,8 +23,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @NamedQueries({
 		@NamedQuery(name="Movie.findByMovieTitle",query="SELECT m FROM Movie m WHERE m.title = :mTitle"),
 		@NamedQuery(name="Movie.findAll", query="SELECT m FROM Movie m WHERE m.deleted=\"false\""),
-		@NamedQuery(name="Movie.topRatedMovies", query="SELECT m from Movie WHERE m.type like \"mov%\" and m.deleted=\"false\""),
-		@NamedQuery(name="Movie.topRatedSeries", query="SELECT m from Movie WHERE m.type like \"ser%\" and m.deleted=\"false\"")
+		@NamedQuery(name="Movie.topRatedMovies", query="SELECT m from Movie WHERE m.type like 'mov%' and m.deleted=\"false\""),
+		@NamedQuery(name="Movie.topRatedSeries", query="SELECT m from Movie WHERE m.type like 'ser%' and m.deleted=\"false\"")
 })
 public class Movie {
 	
