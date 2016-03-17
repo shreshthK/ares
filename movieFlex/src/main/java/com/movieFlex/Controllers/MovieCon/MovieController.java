@@ -55,16 +55,14 @@ public class MovieController implements MovieActions{
 								produces=MediaType.APPLICATION_JSON_VALUE)
 	public int submitMovieFlexRatings(@PathVariable("emailId") String emailId,
 						@PathVariable("uuid") String uuid,@PathVariable("rate") int rate) {
-		// TODO Auto-generated method stub
-		return 0;
+		return mActions.addRatings(uuid, mActions.getUserFromId(uuid), rate);
 	}
 
 	@Override
 	@RequestMapping(value="/{uuid}",method= RequestMethod.GET,
 								produces=MediaType.APPLICATION_JSON_VALUE)
 	public int getMovieFlexRatings(@PathVariable("uuid") String uuid) {
-		// TODO Auto-generated method stub
-		return 0;
+		return mActions.getRatings(uuid);
 	}
 
 	@Override

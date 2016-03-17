@@ -6,9 +6,14 @@ import com.movieFlex.Exception.MovieAlreadyExistsException;
 import com.movieFlex.Exception.MovieNotFoundException;
 import com.movieFlex.Model.Pojos.Comment;
 import com.movieFlex.Model.Pojos.Movie;
+import com.movieFlex.Model.Pojos.User;
 
 public interface MovieDaoActions {
 
+	/**
+	 * get a single movie by ID
+	 */
+	public User getUserFromId(String emailId);
 	/**
 	 * Get a list of comments from the underlying DAO layer
 	 */
@@ -34,4 +39,14 @@ public interface MovieDaoActions {
 	public List<Movie> findTopRatedSeries();
 
 	public List<Movie> findAllMovies();
+	
+	/**
+	 * Rating a title
+	 */
+	public Integer addRatings(String movieUuid, User user, Integer rating);
+	
+	/**
+	 * Get a title ratings
+	 */
+	public Integer getRatings(String movieUuid);
 }

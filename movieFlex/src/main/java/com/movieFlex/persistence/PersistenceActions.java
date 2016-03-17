@@ -2,6 +2,7 @@ package com.movieFlex.persistence;
 
 import java.util.List;
 
+import com.movieFlex.Exception.MovieNotFoundException;
 import com.movieFlex.Model.Pojos.Comment;
 
 public interface PersistenceActions {
@@ -15,4 +16,13 @@ public interface PersistenceActions {
 	 * Persist a comment object, returns a fresh list of comments
 	 */
 	public List<Comment> addComment(Comment comment);
+    
+
+	public Integer addRatings(String movieId, String userId, Integer ratings) throws MovieNotFoundException;
+	
+	/**
+	 * 
+	 */
+	public Integer getRatings(String movieId) throws MovieNotFoundException;
+
 }

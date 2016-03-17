@@ -1,6 +1,6 @@
 package com.movieFlex.Dao;
 
-import java.util.Collections;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -17,6 +17,8 @@ import com.movieFlex.Model.Pojos.Comment;
 import com.movieFlex.Model.Pojos.Directors;
 import com.movieFlex.Model.Pojos.Genre;
 import com.movieFlex.Model.Pojos.Movie;
+import com.movieFlex.Model.Pojos.Ratings;
+import com.movieFlex.Model.Pojos.User;
 import com.movieFlex.Model.Pojos.Writers;
 
 @Repository
@@ -171,5 +173,39 @@ public class MoviesDao implements MovieDaoActions{
 		TypedQuery<Movie> query = em.createQuery("Movie.topRatedSeries", Movie.class);
 		List<Movie>mv=query.getResultList();
 		return mv;
+	}
+
+	@Override
+	public Integer addRatings(String movieUuid, User user, Integer rating) {
+		TypedQuery<Ratings> tq = em.createNamedQuery("Ratings.getByMovieId", Ratings.class);
+		tq.setParameter("rRatingId", movieUuid);
+		List<Ratings> ratings = tq.getResultList();
+		
+		Ratings r = ratings.get(0);
+		List<User> u = r.getUsersRated();
+		if(u.contains(user))
+			return ratings.get(0).getRatings();
+		
+		r.setRatings((r.getRatings()+rating)/2);
+		List<User> newU = r.getUsersRated();
+		newU.add(user);
+		r.setUsersRated( newU );
+		return ratings.get(0).getRatings();
+	}
+
+	@Override
+	public Integer getRatings(String movieUuid) {
+		TypedQuery<Ratings> tq = em.createNamedQuery("Ratings.getByMovieId", Ratings.class);
+		tq.setParameter("rRatingId", movieUuid);
+		List<Ratings> ratings = tq.getResultList();
+		return ratings.get(0).getRatings();
+	}
+
+	@Override
+	public User getUserFromId(String emailId) {
+		TypedQuery< User> tx = em.createNamedQuery("User.findByEmail", User.class);
+		tx.setParameter("uEmail", emailId);
+		List<User> qList = tx.getResultList();
+		return qList.get(0);
 	}
 }
